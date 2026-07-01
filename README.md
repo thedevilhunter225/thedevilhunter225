@@ -1,72 +1,59 @@
 <p align="center">
-  <img src="https://capsule-render.vercel.app/api?type=waving&height=250&color=0:050505,28:160a0a,58:7f1d1d,100:f97316&text=THEDEVILHUNTER225&fontColor=fff7ed&fontSize=45&fontAlignY=36&desc=Cybersecurity%20Undergraduate%20%7C%20Threat%20Intelligence%20%7C%20SIEM%20Analysis&descAlignY=58&animation=twinkling" alt="cyber samurai banner" />
+  <img src="assets/sakura-samurai-hero.png" alt="sakura samurai cybersecurity profile banner" />
+</p>
+
+<h1 align="center">thedevilhunter225</h1>
+
+<p align="center">
+  <img src="https://readme-typing-svg.demolab.com?font=JetBrains+Mono&weight=700&size=22&duration=2200&pause=700&color=D94673&center=true&vCenter=true&width=950&lines=Cybersecurity+Undergraduate;Threat+Intelligence+%7C+SIEM+Triage+%7C+CTF+Labs;Building+practical+security+tools+with+clear+evidence" alt="animated profile summary" />
 </p>
 
 <p align="center">
-  <img src="assets/samurai-dojo.svg" alt="animated cyber samurai security operations scene" />
+  <img src="https://img.shields.io/badge/Focus-Threat%20Detection-2A1418?style=for-the-badge&labelColor=0B0B0D&color=E78AA5" />
+  <img src="https://img.shields.io/badge/Specialty-SIEM%20%2B%20CTI-2A1418?style=for-the-badge&labelColor=0B0B0D&color=C05272" />
+  <img src="https://img.shields.io/badge/Practice-CTF%20%2B%20Labs-2A1418?style=for-the-badge&labelColor=0B0B0D&color=F2B7C6" />
 </p>
 
-<p align="center">
-  <a href="https://thedevilhunter225.github.io/thedevilhunter225/game/">
-    <img src="https://img.shields.io/badge/Play-Cyber%20Samurai%20IOC%20Hunt-f97316?style=for-the-badge&labelColor=050505" alt="play cyber samurai ioc hunt" />
-  </a>
-</p>
+---
 
-<p align="center">
-  <img src="https://readme-typing-svg.demolab.com?font=JetBrains+Mono&weight=800&size=24&duration=1900&pause=450&color=F97316&center=true&vCenter=true&multiline=false&repeat=true&width=950&lines=Cybersecurity+Undergraduate+focused+on+threat+detection;SIEM+Monitoring+%7C+Threat+Intelligence+%7C+CTF+Labs;Transforming+logs%2C+IOCs%2C+and+alerts+into+actionable+findings;Building+practical+security+tools+and+hands-on+lab+environments" alt="animated cybersecurity typing" />
-</p>
+## Profile
 
-<p align="center">
-  <img src="https://capsule-render.vercel.app/api?type=rect&height=4&color=gradient&customColorList=2,4,12,20,24&animation=blinking" alt="animated divider" />
-</p>
-
-<p align="center">
-  <img src="https://img.shields.io/badge/Focus-Cybersecurity-7f1d1d?style=for-the-badge&labelColor=050505" />
-  <img src="https://img.shields.io/badge/Specialty-SIEM%20%2B%20CTI-f97316?style=for-the-badge&labelColor=050505" />
-  <img src="https://img.shields.io/badge/Practice-CTF%20%2B%20Labs-dc2626?style=for-the-badge&labelColor=050505" />
-  <img src="https://img.shields.io/badge/Approach-Evidence%20Driven-111827?style=for-the-badge&labelColor=050505" />
-</p>
-
-## Professional Profile
+I am a BS Cyber Security student focused on practical detection work, threat intelligence, and evidence-based analysis. My work centers on building tools and labs that turn suspicious activity into clear findings: logs, indicators, enrichment results, triage notes, and reports that can be defended technically.
 
 ```txt
-alias       thedevilhunter225
-location    Islamabad, Pakistan
-education   BS Cyber Security - 6th semester
-focus       SIEM monitoring, threat intelligence, CTF labs, detection engineering
-objective   build practical security tools and produce clear, evidence-based analysis
+Alias        thedevilhunter225
+Location     Islamabad, Pakistan
+Education    BS Cyber Security - 6th semester
+Focus        SIEM monitoring, CTI enrichment, detection engineering, CTF practice
+Approach     calm analysis, reproducible evidence, clear technical reporting
 ```
 
-<p align="center">
-  <img src="https://readme-typing-svg.demolab.com?font=JetBrains+Mono&size=18&duration=1500&pause=250&color=DC2626&center=true&vCenter=true&width=850&lines=%3E+analyze+security+events;%3E+enrich+indicators+of+compromise;%3E+validate+findings+with+evidence;%3E+document+clear+technical+reports" alt="animated terminal workflow" />
-</p>
-
-## Technical Stack
-
-<p align="center">
-  <img src="https://skillicons.dev/icons?i=linux,kali,python,fastapi,sqlite,git,github,vscode,html,js" />
-</p>
+## Core Skills
 
 ```txt
-Detection      Elastic Security, Kibana, Elastic Agent, SIEM triage
-Labs           Nmap, Kali Linux, VirtualBox, VMware, controlled lab networks
+Detection      Elastic Security, Kibana, Elastic Agent, alert triage
 Intelligence   VirusTotal, urlscan.io, AlienVault OTX, DNS/RDAP enrichment
-Development    FastAPI, SQLite, automation scripts, report generation
+Labs           Kali Linux, Nmap, VirtualBox, VMware, controlled networks
+Development    Python, FastAPI, SQLite, automation scripts, report generation
 ```
 
-## Featured Projects
+<p align="center">
+  <img src="https://skillicons.dev/icons?i=python,linux,kali,fastapi,sqlite,git,github,vscode,html,js" alt="technical stack icons" />
+</p>
+
+## Featured Work
 
 <table>
   <tr>
     <td width="50%">
       <h3>PhishGuard CTI</h3>
-      <p>Threat intelligence analyzer for suspicious URLs and domains with explainable risk scoring, IOC extraction, enrichment, sandbox evidence, and report exports.</p>
-      <p><b>Focus:</b> phishing analysis, enrichment workflows, and evidence-backed reporting.</p>
+      <p>URL and domain-based phishing threat intelligence analyzer with IOC extraction, external enrichment, risk scoring, and report-focused output.</p>
+      <p><b>Built for:</b> practical phishing analysis and evidence-backed decision making.</p>
     </td>
     <td width="50%">
       <h3>Elastic Stack SIEM Lab</h3>
-      <p>Home lab for endpoint log collection, Elastic Security monitoring, Nmap activity simulation, dashboards, and alerting workflows.</p>
-      <p><b>Focus:</b> detection engineering, alert triage, and practical monitoring workflows.</p>
+      <p>Home lab for endpoint telemetry, Elastic Security monitoring, Nmap activity simulation, dashboards, and alert review workflows.</p>
+      <p><b>Built for:</b> detection practice, triage discipline, and analyst workflow training.</p>
     </td>
   </tr>
 </table>
@@ -81,24 +68,16 @@ SUDO Fuzzers CTF - 1st Position
 NUST Hackathon 2026 - 3rd Position
 ```
 
-<p align="center">
-  <img src="https://readme-typing-svg.demolab.com?font=JetBrains+Mono&weight=700&size=18&duration=1700&pause=350&color=F97316&center=true&vCenter=true&width=850&lines=CTF+Finalist+%7C+Rank+%231+%7C+Competition+Winner;Practical+labs+and+competitions+drive+my+learning;Consistent+practice+builds+stronger+security+judgment" alt="animated achievement highlights" />
-</p>
-
-## Activity Dashboard
+## Activity
 
 <p align="center">
-  <img src="https://streak-stats.demolab.com?user=thedevilhunter225&theme=dark&hide_border=true&background=050505&ring=F97316&fire=DC2626&currStreakLabel=FFF7ED&sideLabels=F97316&currStreakNum=FFF7ED&sideNums=FFF7ED" alt="github streak" />
+  <img src="https://github-readme-stats.vercel.app/api?username=thedevilhunter225&show_icons=true&hide_border=true&bg_color=0B0B0D&title_color=F2B7C6&text_color=F8E7EC&icon_color=D94673" alt="github stats" />
 </p>
 
 <p align="center">
-  <img src="https://github-readme-activity-graph.vercel.app/graph?username=thedevilhunter225&theme=redical&hide_border=true&bg_color=050505&color=fff7ed&line=f97316&point=dc2626&area=true&area_color=7f1d1d" alt="animated contribution graph" />
+  <img src="https://github-readme-activity-graph.vercel.app/graph?username=thedevilhunter225&theme=react-dark&hide_border=true&bg_color=0B0B0D&color=F8E7EC&line=D94673&point=F2B7C6&area=true&area_color=3A171F" alt="github activity graph" />
 </p>
 
 <p align="center">
-  <img src="https://capsule-render.vercel.app/api?type=waving&height=120&section=footer&color=0:f97316,45:7f1d1d,100:050505&animation=twinkling" alt="animated footer wave" />
-</p>
-
-<p align="center">
-  <b>Focused on practical cybersecurity, clear evidence, and continuous improvement.</b>
+  <b>Quiet focus. Sharp evidence. Practical security work.</b>
 </p>
