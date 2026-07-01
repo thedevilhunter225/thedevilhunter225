@@ -3,7 +3,7 @@
 </p>
 
 <p align="center">
-  <img src="assets/samurai-dojo.svg" alt="animated cyber samurai dojo game scene" />
+  <img src="assets/samurai-dojo.svg" alt="animated cyber samurai security operations scene" />
 </p>
 
 <p align="center">
