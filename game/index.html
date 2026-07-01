@@ -1,0 +1,389 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Cyber Samurai: IOC Hunt</title>
+  <style>
+    :root {
+      color-scheme: dark;
+      --bg: #050505;
+      --panel: rgba(12, 12, 16, .82);
+      --red: #dc2626;
+      --orange: #f97316;
+      --text: #fff7ed;
+      --muted: #a3a3a3;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: grid;
+      place-items: center;
+      background:
+        radial-gradient(circle at 72% 20%, rgba(249, 115, 22, .25), transparent 28%),
+        radial-gradient(circle at 22% 72%, rgba(220, 38, 38, .16), transparent 34%),
+        linear-gradient(135deg, #030303, #120506 46%, #050505);
+      color: var(--text);
+      font-family: "Segoe UI", system-ui, sans-serif;
+      overflow: hidden;
+    }
+    .shell {
+      width: min(1120px, calc(100vw - 32px));
+      display: grid;
+      gap: 14px;
+    }
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: end;
+      gap: 16px;
+    }
+    h1 {
+      margin: 0;
+      font-size: clamp(26px, 4vw, 44px);
+      letter-spacing: 0;
+      line-height: 1;
+    }
+    .sub {
+      margin: 8px 0 0;
+      color: var(--muted);
+      font-size: 15px;
+    }
+    .hud {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+      font-family: Consolas, monospace;
+      font-size: 14px;
+    }
+    .chip {
+      border: 1px solid rgba(249, 115, 22, .45);
+      background: rgba(5, 5, 5, .72);
+      padding: 8px 11px;
+      border-radius: 8px;
+      min-width: 110px;
+      text-align: center;
+    }
+    canvas {
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      display: block;
+      background: #050505;
+      border: 1px solid rgba(249, 115, 22, .28);
+      border-radius: 10px;
+      box-shadow: 0 24px 80px rgba(0,0,0,.65), 0 0 40px rgba(220,38,38,.18);
+    }
+    .controls {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      flex-wrap: wrap;
+      color: var(--muted);
+      font-size: 14px;
+    }
+    kbd {
+      border: 1px solid rgba(255,255,255,.18);
+      background: rgba(255,255,255,.08);
+      border-radius: 6px;
+      padding: 2px 7px;
+      color: var(--text);
+      font-family: Consolas, monospace;
+    }
+    button {
+      border: 1px solid rgba(249, 115, 22, .48);
+      background: linear-gradient(180deg, rgba(249,115,22,.95), rgba(127,29,29,.95));
+      color: var(--text);
+      border-radius: 8px;
+      padding: 10px 14px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <main class="shell">
+    <header>
+      <div>
+        <h1>Cyber Samurai: IOC Hunt</h1>
+        <p class="sub">Deflect hostile packets, collect indicators, and keep the SOC signal clean.</p>
+      </div>
+      <div class="hud">
+        <div class="chip">SCORE <span id="score">0</span></div>
+        <div class="chip">HEALTH <span id="health">100</span></div>
+        <div class="chip">LEVEL <span id="level">1</span></div>
+      </div>
+    </header>
+
+    <canvas id="game" width="1280" height="720" aria-label="Cyber Samurai game canvas"></canvas>
+
+    <section class="controls">
+      <div><kbd>←</kbd> <kbd>→</kbd> move · <kbd>Space</kbd> slash · collect orange IOCs · avoid red packets</div>
+      <button id="restart">Restart Mission</button>
+    </section>
+  </main>
+
+  <script>
+    const canvas = document.getElementById("game");
+    const ctx = canvas.getContext("2d");
+    const scoreEl = document.getElementById("score");
+    const healthEl = document.getElementById("health");
+    const levelEl = document.getElementById("level");
+    const keys = new Set();
+    const player = { x: 640, y: 575, w: 54, h: 92, slash: 0 };
+    let packets = [];
+    let iocs = [];
+    let sparks = [];
+    let score = 0;
+    let health = 100;
+    let level = 1;
+    let tick = 0;
+    let running = true;
+
+    function reset() {
+      packets = [];
+      iocs = [];
+      sparks = [];
+      score = 0;
+      health = 100;
+      level = 1;
+      tick = 0;
+      running = true;
+      player.x = 640;
+      player.slash = 0;
+      updateHud();
+    }
+
+    function updateHud() {
+      scoreEl.textContent = score;
+      healthEl.textContent = Math.max(0, health);
+      levelEl.textContent = level;
+    }
+
+    function spawn() {
+      const speed = 2 + level * 0.45;
+      if (tick % Math.max(24, 70 - level * 5) === 0) {
+        packets.push({ x: Math.random() * 1180 + 30, y: -30, r: 16, vy: speed + Math.random() * 1.8 });
+      }
+      if (tick % 96 === 0) {
+        iocs.push({ x: Math.random() * 1140 + 70, y: -24, r: 12, vy: speed * .82 });
+      }
+      if (tick % 10 === 0) {
+        sparks.push({ x: Math.random() * 1280, y: 720, vy: -1.5 - Math.random() * 2, a: .25 + Math.random() * .55 });
+      }
+    }
+
+    function rectHitCircle(rect, circle) {
+      const cx = Math.max(rect.x - rect.w / 2, Math.min(circle.x, rect.x + rect.w / 2));
+      const cy = Math.max(rect.y - rect.h, Math.min(circle.y, rect.y));
+      const dx = circle.x - cx;
+      const dy = circle.y - cy;
+      return dx * dx + dy * dy < circle.r * circle.r;
+    }
+
+    function update() {
+      if (!running) return;
+      tick++;
+      level = 1 + Math.floor(score / 120);
+      if (keys.has("ArrowLeft") || keys.has("a")) player.x -= 7;
+      if (keys.has("ArrowRight") || keys.has("d")) player.x += 7;
+      player.x = Math.max(60, Math.min(1220, player.x));
+      if (player.slash > 0) player.slash--;
+      spawn();
+
+      packets.forEach(p => p.y += p.vy);
+      iocs.forEach(i => i.y += i.vy);
+      sparks.forEach(s => { s.y += s.vy; s.a *= .988; });
+
+      const slashBox = { x: player.x + 55, y: player.y - 30, w: 140, h: 95 };
+      packets = packets.filter(p => {
+        if (player.slash && rectHitCircle(slashBox, p)) {
+          score += 15;
+          return false;
+        }
+        if (rectHitCircle(player, p)) {
+          health -= 14;
+          return false;
+        }
+        return p.y < 760;
+      });
+      iocs = iocs.filter(i => {
+        if (rectHitCircle(player, i)) {
+          score += 25;
+          return false;
+        }
+        return i.y < 760;
+      });
+      sparks = sparks.filter(s => s.a > .04 && s.y > -20);
+      if (health <= 0) running = false;
+      updateHud();
+    }
+
+    function background() {
+      const grd = ctx.createLinearGradient(0, 0, 1280, 720);
+      grd.addColorStop(0, "#030303");
+      grd.addColorStop(.55, "#160607");
+      grd.addColorStop(1, "#050505");
+      ctx.fillStyle = grd;
+      ctx.fillRect(0, 0, 1280, 720);
+      ctx.strokeStyle = "rgba(249,115,22,.12)";
+      for (let y = (tick % 42); y < 720; y += 42) {
+        ctx.beginPath();
+        ctx.moveTo(0, y);
+        ctx.lineTo(1280, y);
+        ctx.stroke();
+      }
+      for (let x = 40; x < 1280; x += 88) {
+        ctx.beginPath();
+        ctx.moveTo(x, 0);
+        ctx.lineTo(x, 720);
+        ctx.stroke();
+      }
+      ctx.fillStyle = "rgba(249,115,22,.85)";
+      ctx.beginPath();
+      ctx.arc(990, 120, 76, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.fillStyle = "rgba(8,4,5,.9)";
+      ctx.beginPath();
+      ctx.arc(952, 98, 78, 0, Math.PI * 2);
+      ctx.fill();
+    }
+
+    function drawSamurai() {
+      ctx.save();
+      ctx.translate(player.x, player.y);
+      ctx.shadowColor = "#f97316";
+      ctx.shadowBlur = 14;
+      ctx.fillStyle = "#0b0b0f";
+      ctx.strokeStyle = "#f97316";
+      ctx.lineWidth = 4;
+      ctx.beginPath();
+      ctx.moveTo(-34, -8);
+      ctx.quadraticCurveTo(-20, -100, 42, -112);
+      ctx.quadraticCurveTo(74, -64, 52, -8);
+      ctx.closePath();
+      ctx.fill();
+      ctx.stroke();
+      ctx.fillStyle = "#dc2626";
+      ctx.beginPath();
+      ctx.moveTo(-48, -112);
+      ctx.quadraticCurveTo(8, -160, 76, -110);
+      ctx.quadraticCurveTo(10, -92, -48, -112);
+      ctx.fill();
+      ctx.strokeStyle = "#fff7ed";
+      ctx.lineWidth = 7;
+      ctx.beginPath();
+      ctx.moveTo(-28, -92);
+      ctx.lineTo(46, -92);
+      ctx.stroke();
+      ctx.strokeStyle = "#f97316";
+      ctx.lineWidth = 10;
+      ctx.beginPath();
+      ctx.moveTo(-44, -8);
+      ctx.lineTo(-78, 64);
+      ctx.moveTo(48, -8);
+      ctx.lineTo(82, 64);
+      ctx.stroke();
+      ctx.strokeStyle = "#dc2626";
+      ctx.lineWidth = 12;
+      ctx.beginPath();
+      ctx.moveTo(-30, -28);
+      ctx.lineTo(-106, 22);
+      ctx.moveTo(44, -30);
+      ctx.lineTo(112, 20);
+      ctx.stroke();
+      ctx.strokeStyle = player.slash ? "#fff7ed" : "#f97316";
+      ctx.lineWidth = player.slash ? 12 : 8;
+      ctx.beginPath();
+      ctx.moveTo(-2, -18);
+      ctx.lineTo(player.slash ? 176 : 122, player.slash ? -168 : -124);
+      ctx.stroke();
+      if (player.slash) {
+        ctx.strokeStyle = "rgba(249,115,22,.55)";
+        ctx.lineWidth = 24;
+        ctx.beginPath();
+        ctx.arc(70, -72, 150, -0.9, 0.18);
+        ctx.stroke();
+      }
+      ctx.restore();
+    }
+
+    function drawEntities() {
+      sparks.forEach(s => {
+        ctx.fillStyle = `rgba(249,115,22,${s.a})`;
+        ctx.beginPath();
+        ctx.arc(s.x, s.y, 2, 0, Math.PI * 2);
+        ctx.fill();
+      });
+      packets.forEach(p => {
+        ctx.shadowColor = "#dc2626";
+        ctx.shadowBlur = 14;
+        ctx.fillStyle = "#dc2626";
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.shadowBlur = 0;
+      });
+      iocs.forEach(i => {
+        ctx.shadowColor = "#f97316";
+        ctx.shadowBlur = 18;
+        ctx.strokeStyle = "#f97316";
+        ctx.lineWidth = 4;
+        ctx.beginPath();
+        ctx.arc(i.x, i.y, i.r, 0, Math.PI * 2);
+        ctx.stroke();
+        ctx.shadowBlur = 0;
+      });
+    }
+
+    function overlay() {
+      ctx.fillStyle = "rgba(5,5,5,.72)";
+      ctx.strokeStyle = "rgba(249,115,22,.35)";
+      ctx.lineWidth = 1;
+      ctx.fillRect(36, 34, 356, 92);
+      ctx.strokeRect(36, 34, 356, 92);
+      ctx.fillStyle = "#f97316";
+      ctx.font = "700 23px Consolas, monospace";
+      ctx.fillText("SECURITY OPERATIONS", 58, 70);
+      ctx.fillStyle = "#fff7ed";
+      ctx.font = "15px Consolas, monospace";
+      ctx.fillText("deflect packets | collect IOCs | stay online", 58, 102);
+      if (!running) {
+        ctx.fillStyle = "rgba(0,0,0,.72)";
+        ctx.fillRect(0, 0, 1280, 720);
+        ctx.fillStyle = "#fff7ed";
+        ctx.font = "800 46px Segoe UI, sans-serif";
+        ctx.textAlign = "center";
+        ctx.fillText("Mission Failed", 640, 335);
+        ctx.font = "18px Segoe UI, sans-serif";
+        ctx.fillText("Press Restart Mission to try again.", 640, 370);
+        ctx.textAlign = "left";
+      }
+    }
+
+    function draw() {
+      background();
+      drawEntities();
+      drawSamurai();
+      overlay();
+    }
+
+    function loop() {
+      update();
+      draw();
+      requestAnimationFrame(loop);
+    }
+
+    addEventListener("keydown", e => {
+      if (["ArrowLeft", "ArrowRight", " ", "a", "d"].includes(e.key)) e.preventDefault();
+      keys.add(e.key);
+      if (e.key === " ") player.slash = 12;
+    });
+    addEventListener("keyup", e => keys.delete(e.key));
+    document.getElementById("restart").addEventListener("click", reset);
+    reset();
+    loop();
+  </script>
+</body>
+</html>
