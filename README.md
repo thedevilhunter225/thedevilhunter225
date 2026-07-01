@@ -72,15 +72,10 @@ NUST Hackathon 2026 - 3rd Position
 ```
 
 <p align="center">
-  <img src="https://github-profile-trophy.vercel.app/?username=thedevilhunter225&theme=radical&no-frame=true&no-bg=true&margin-w=12&margin-h=12&column=4" alt="animated trophy wall" />
+  <img src="https://readme-typing-svg.demolab.com?font=JetBrains+Mono&weight=700&size=18&duration=1700&pause=350&color=F97316&center=true&vCenter=true&width=850&lines=Finalist+%7C+Rank+%231+%7C+CTF+Winner;Every+mark+is+a+lesson;Every+challenge+sharpens+the+blade" alt="animated battle marks" />
 </p>
 
 ## Dojo Dashboard
-
-<p align="center">
-  <img height="172" src="https://github-readme-stats.vercel.app/api?username=thedevilhunter225&show_icons=true&theme=radical&hide_border=true&bg_color=050505&title_color=f97316&icon_color=dc2626&text_color=fff7ed" alt="github stats" />
-  <img height="172" src="https://github-readme-stats.vercel.app/api/top-langs/?username=thedevilhunter225&layout=compact&theme=radical&hide_border=true&bg_color=050505&title_color=f97316&text_color=fff7ed" alt="top languages" />
-</p>
 
 <p align="center">
   <img src="https://streak-stats.demolab.com?user=thedevilhunter225&theme=dark&hide_border=true&background=050505&ring=F97316&fire=DC2626&currStreakLabel=FFF7ED&sideLabels=F97316&currStreakNum=FFF7ED&sideNums=FFF7ED" alt="github streak" />
