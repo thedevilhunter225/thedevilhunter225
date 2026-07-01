@@ -3,6 +3,10 @@
 </p>
 
 <p align="center">
+  <img src="assets/samurai-dojo.svg" alt="animated cyber samurai dojo game scene" />
+</p>
+
+<p align="center">
   <img src="https://readme-typing-svg.demolab.com?font=JetBrains+Mono&weight=800&size=24&duration=1900&pause=450&color=F97316&center=true&vCenter=true&multiline=false&repeat=true&width=950&lines=%E2%9A%94%EF%B8%8F+Cyber+Samurai+entering+the+dojo...;%E2%9B%A9%EF%B8%8F+SIEM+%7C+CTI+%7C+Pentesting+%7C+CTF;%F0%9F%8C%99+Hunting+signals+inside+the+noise;%F0%9F%94%A5+Logs%2C+IOCs%2C+alerts%2C+and+clean+reports" alt="animated cyber samurai typing" />
 </p>
 
