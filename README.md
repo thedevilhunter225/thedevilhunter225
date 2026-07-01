@@ -7,6 +7,12 @@
 </p>
 
 <p align="center">
+  <a href="https://thedevilhunter225.github.io/thedevilhunter225/game/">
+    <img src="https://img.shields.io/badge/Play-Cyber%20Samurai%20IOC%20Hunt-f97316?style=for-the-badge&labelColor=050505" alt="play cyber samurai ioc hunt" />
+  </a>
+</p>
+
+<p align="center">
   <img src="https://readme-typing-svg.demolab.com?font=JetBrains+Mono&weight=800&size=24&duration=1900&pause=450&color=F97316&center=true&vCenter=true&multiline=false&repeat=true&width=950&lines=Cybersecurity+Undergraduate+focused+on+threat+detection;SIEM+Monitoring+%7C+Threat+Intelligence+%7C+CTF+Labs;Transforming+logs%2C+IOCs%2C+and+alerts+into+actionable+findings;Building+practical+security+tools+and+hands-on+lab+environments" alt="animated cybersecurity typing" />
 </p>
 
