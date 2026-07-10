@@ -1,0 +1,41 @@
+name: CTF MTE inspection
+
+on:
+  push:
+    branches:
+      - ctf-mte-analysis
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  inspect:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - name: Checkout helper branch
+        uses: actions/checkout@v4
+
+      - name: Clone official SekaiCTF repository
+        run: |
+          git clone --depth 1 https://github.com/project-sekai-ctf/sekaictf-2026.git official
+
+      - name: Inventory MTE challenge
+        run: |
+          set -euxo pipefail
+          find official/pwn/MTE -type f -printf '%P\t%s bytes\n' | sort | tee mte-tree.txt
+          find official/pwn/MTE -maxdepth 4 -type f \( -name '*.md' -o -name '*.c' -o -name '*.cc' -o -name '*.cpp' -o -name '*.h' -o -name '*.py' -o -name '*.sh' -o -name 'Dockerfile*' -o -name 'Makefile*' -o -name '*.yml' -o -name '*.yaml' -o -name '*.txt' \) -print0 \
+            | xargs -0 -r -I{} sh -c 'echo "===== {} ====="; cat "{}"; echo' > mte-text-dump.txt
+          tar -czf mte-official.tar.gz -C official pwn/MTE
+
+      - name: Upload inspection artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: mte-inspection
+          path: |
+            mte-tree.txt
+            mte-text-dump.txt
+            mte-official.tar.gz
+          compression-level: 0
+          retention-days: 7
