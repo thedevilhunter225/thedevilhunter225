@@ -52,7 +52,7 @@ clear evidence     ·  repeatable technical notes
     <td width="33%" valign="top">
       <h3>Security Writeups</h3>
       <p>A hand-built archive of security research, Hack The Box and TryHackMe walkthroughs, CTF solutions, and red-team notes.</p>
-      <a href="https://github.com/thedevilhunter225/thedevilhunter225.github.io"><code>view source →</code></a>
+      <a href="https://github.com/thedevilhunter225/thedevilhunter.dev"><code>view source →</code></a>
     </td>
     <td width="33%" valign="top">
       <h3>SysViz</h3>
